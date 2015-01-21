@@ -11,6 +11,9 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		//ESSAI GIT HUB
+		//on a joute ca
+		
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 				System.out.println("On test la connection a la base de donnee");
@@ -39,11 +42,18 @@ public class Main
 					//on ferme le resultat
 					resultat.close();
 					base.close(); // fermeture de la connexion
+					
+					afficherMessage();
 				}
 				catch (Exception err)
 				{
 					System.out.println("Une erreur, Oh Oh!");
 				} // Attention il faut capturer les exceptions !
+	}
+
+	private static void afficherMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private static void afficherResultats(ResultSet resultat) throws SQLException {
