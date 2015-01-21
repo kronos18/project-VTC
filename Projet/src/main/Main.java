@@ -14,7 +14,7 @@ public class Main
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 				System.out.println("On test la connection a la base de donnee");
-
+				//ESSAI GIT HUB
 
 				try 
 				{
@@ -27,8 +27,11 @@ public class Main
 					System.out.println("On s'est connecte ...");
 					Statement requete = base.createStatement(); // création du descripteur de requête
 					System.out.println("On s'est connecte ...");
-					ResultSet resultat = requete.executeQuery( // exécution d'une requête
-							"SELECT * FROM STATION");
+					
+					String requeteOracle;
+					requeteOracle = "SELECT * FROM STATION";
+					// exécution d'une requête
+					ResultSet resultat = requete.executeQuery(requeteOracle);
 					afficherResultats(resultat);
 					
 					//on ferme la requete
