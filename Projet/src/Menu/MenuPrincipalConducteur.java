@@ -4,6 +4,10 @@ import java.sql.Connection;
 
 public class MenuPrincipalConducteur implements Menu {
 
+	public MenuPrincipalConducteur(MenuPrincipal menuPrincipal) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void lancer() {
 		// TODO Auto-generated method stub

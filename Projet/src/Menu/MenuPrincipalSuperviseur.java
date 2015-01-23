@@ -2,6 +2,10 @@ package Menu;
 
 public class MenuPrincipalSuperviseur implements Menu {
 
+	public MenuPrincipalSuperviseur(MenuPrincipal menuPrincipal) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String getNomMenu() {
 		// TODO Auto-generated method stub

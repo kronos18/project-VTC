@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import bdd.Bdd;
 import Menu.*;
 
 public class Main
@@ -22,8 +23,15 @@ public class Main
 			Connection base = etablirLaConnexionAlaBDD();
 			Statement requete = base.createStatement(); // création du descripteur de requête
 
-			String requeteOracle;
-			requeteOracle = "SELECT * FROM STATION";
+			
+			/*Bdd baseDeDonnee = new Bdd();
+			//connexion a la base de donnee
+			baseDeDonnee.connexion();
+			
+			Statement requete;
+			requete = Bdd.getInstance().createStatement();*/
+			
+			
 			
 			Menu menuPrincipal = new MenuPrincipal(base);
 			menuPrincipal.lancer();

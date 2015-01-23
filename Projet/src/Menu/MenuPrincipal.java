@@ -59,15 +59,15 @@ public class MenuPrincipal implements Menu
 		switch (choix) 
 		{
 		case 1:
-			Menu menuPrincipalUtilisateur = new MenuPrincipalUtilisateur();
+			Menu menuPrincipalUtilisateur = new MenuPrincipalUtilisateur(this);
 			menuPrincipalUtilisateur.lancer();
 			break;
 		case 2:
-			Menu menuPrincipalConducteur = new MenuPrincipalConducteur();
+			Menu menuPrincipalConducteur = new MenuPrincipalConducteur(this);
 			menuPrincipalConducteur.lancer();
 			break;
 		case 3:
-			Menu menuPrincipalSuperviseur = new MenuPrincipalSuperviseur();
+			Menu menuPrincipalSuperviseur = new MenuPrincipalSuperviseur(this);
 			menuPrincipalSuperviseur.lancer();
 			break;
 		case 4:
@@ -79,6 +79,10 @@ public class MenuPrincipal implements Menu
 		default:
 			break;
 		}
+	}
+
+	public Connection getBase() {
+		return base;
 	}
 
 }
