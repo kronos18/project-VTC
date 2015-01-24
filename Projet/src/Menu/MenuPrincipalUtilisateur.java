@@ -3,7 +3,6 @@ package Menu;
 import java.util.Scanner;
 
 import ressources.Abonne;
-import ressources.Reservation;
 
 
 public class MenuPrincipalUtilisateur implements Menu 
@@ -61,8 +60,8 @@ public class MenuPrincipalUtilisateur implements Menu
 			abonne.lancerProcedureAbonnement();
 			break;
 		case 2:
-			Menu menuPrincipalConducteur = new MenuPrincipalConducteur();
-			menuPrincipalConducteur.lancer();
+			/*Menu menuPrincipalConducteur = new MenuPrincipalConducteur();
+			menuPrincipalConducteur.lancer();*/
 			break;
 		case 3:
 			

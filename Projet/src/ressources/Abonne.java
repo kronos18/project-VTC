@@ -46,13 +46,11 @@ public class Abonne
 		String adresse = scanner.nextLine();
 
 		System.out.println("Votre code de Carte bancaire:");
-		scanner.nextLine();
-		int codeCB = scanner.nextInt();
-
+		String codeCB = scanner.nextLine();
 		insererAbonneDansLaBase(nom, prenom, dateDeNaissance,sexe,adresse,codeCB);
 	}
 
-	private void insererAbonneDansLaBase(String nom, String prenom, String dateDeNaissance, String sexe, String adresse, int codeCB) 
+	private void insererAbonneDansLaBase(String nom, String prenom, String dateDeNaissance, String sexe, String adresse, String codeCB) 
 	{
 		try 
 		{
@@ -62,36 +60,55 @@ public class Abonne
 			Statement requete = base.createStatement();
 
 			String codeSecret = genererUnCodeSecret(random);
-			
+
 			System.out.println("Le code secret est "+ codeSecret);
 			
-			resultat = insererUnClient(codeCB, requete, codeSecret);
-			//TODO LA DATE COURANTE
-			requeteOracle = "insert into ABONNE values ('"+ nom +"','"+ prenom +"',"
-					+ "to_date('"+ dateDeNaissance +"', 'yyyy/mm/dd'),'"+ sexe +"','"+ adresse +"',0,to_date('2016/01/20', 'yyyy/mm/dd'),to_date('2015/01/20', 'yyyy/mm/dd'))";
-
+			requeteOracle = "SELECT client_seq.nextval from dual";
 			resultat = requete.executeQuery(requeteOracle);
-			System.out.println("On a echoue a lance notre requete");
-
-
-			//tant  qu'il y a des resultats
-
-			while(resultat.next()) { // récupération des résultats
-				resultat.getString("Origine");
+			String idClient = null; 
+			
+			while(resultat.next())
+			{ // récupération des résultats
+				System.out.println("On recupere les resultats");
+				idClient = resultat.getString("nextval");
+				System.out.println("idclient :"+idClient);
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+			
+			
+			resultat = insererUnClient(codeCB, requete, codeSecret, idClient);
+			//TODO LA DATE COURANTE
+			requeteOracle = "insert into ABONNE values ("+idClient+",'"+ nom +"','"+ prenom +"',"
+					+ "to_date('"+ dateDeNaissance +"', 'dd/mm/yyyy'),'"+ sexe +"','"+ adresse +"',0,to_date('2016/01/20', 'yyyy/mm/dd'),to_date('2015/01/20', 'yyyy/mm/dd'))";
+			afficherLaRequete(requeteOracle);
+			resultat = requete.executeQuery(requeteOracle);
+			System.out.println("On a inseree l'abonne !");
+
+		} 
+		catch (SQLException e)
+		{
+			System.out.println("Impossible d'inserer un abonne dans la base");
+			System.out.println("Details : "+e.getMessage());
 		}
 
 	}
 
-	private ResultSet insererUnClient(int codeCB, Statement requete, String codeSecret)
-			throws SQLException {
+	private void afficherLaRequete(String requeteOracle) {
+		System.out.println("La requete est : ");
+		System.out.println(requeteOracle);
+	}
+
+	private ResultSet insererUnClient(String codeCB, Statement requete, String codeSecret, String idClient)
+			throws SQLException 
+	{
+
 		String requeteOracle;
 		ResultSet resultat;
-		requeteOracle = "insert into CLIENT values ("+ codeSecret +","+codeCB +")";
+		
+		
+		requeteOracle = "insert into CLIENT values ("+idClient+","+ codeSecret +","+codeCB +")";
 
 		resultat = requete.executeQuery(requeteOracle);
+		System.out.println("On a inserer un client");
 		return resultat;
 	}
 
@@ -101,6 +118,15 @@ public class Abonne
 		codeSecret = codeSecret.concat(String.valueOf(random.nextInt(9)));
 		codeSecret = codeSecret.concat(String.valueOf(random.nextInt(9)));
 		return codeSecret;
+	}
+	
+	private static void afficherResultats(ResultSet resultat) throws SQLException {
+		//tant  qu'il y a des resultats
+		while(resultat.next()) { // récupération des résultats
+			System.out.println("Numvol = " + resultat.getString("Numvol")
+					+ ", Origine = " + resultat.getString("Origine")
+					+ ", Destination = " + resultat.getString("Destination"));
+		}
 	}
 
 }

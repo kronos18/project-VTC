@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bdd.Bdd;
 import Menu.*;
 
 public class Main
