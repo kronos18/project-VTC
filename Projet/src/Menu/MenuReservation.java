@@ -1,7 +1,13 @@
 package Menu;
 
+import java.sql.Connection;
+
 public class MenuReservation implements Menu 
 {
+
+	public MenuReservation(Connection base) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String getNomMenu() {

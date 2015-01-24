@@ -1,8 +1,10 @@
 package Menu;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 import abonnement.Abonne;
+import abonnement.Reservation;
 
 
 public class MenuPrincipalUtilisateur implements Menu 
@@ -53,15 +55,17 @@ public class MenuPrincipalUtilisateur implements Menu
 		int choix = 0;
 		Scanner scan = new Scanner(System.in);
 		choix = scan.nextInt();
+		Connection base = menuPrincipal.getBase();
+		
 		switch (choix) 
 		{
 		case 1:
-			Abonne abonne = new Abonne(menuPrincipal.getBase());
+			Abonne abonne = new Abonne(base);
 			abonne.lancerProcedureAbonnement();
 			break;
 		case 2:
-			/*Menu menuPrincipalConducteur = new MenuPrincipalConducteur();
-			menuPrincipalConducteur.lancer();*/
+			Reservation reservation = new Reservation(base);
+			reservation.lancerProcedureReservation();
 			break;
 		case 3:
 			
