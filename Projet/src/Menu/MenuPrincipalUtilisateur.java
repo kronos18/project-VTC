@@ -2,7 +2,7 @@ package Menu;
 
 import java.util.Scanner;
 
-import ressources.Abonne;
+import abonnement.Abonne;
 
 
 public class MenuPrincipalUtilisateur implements Menu 
