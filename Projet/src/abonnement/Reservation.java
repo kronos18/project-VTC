@@ -35,9 +35,9 @@ public class Reservation
 			String jourRecurrence;
 
 			System.out.println("Votre nom :");
-			String nom = scanner.nextLine();
+			String nomAbonne = scanner.nextLine();
 			System.out.println("Votre prenom :");
-			String prenom = scanner.nextLine();
+			String prenomAbonne = scanner.nextLine();
 
 			System.out.println("La date de reservation :");
 
@@ -49,31 +49,46 @@ public class Reservation
 			System.out.println("Votre code secret :");
 			String codeSecret = scanner.nextLine();
 
-				String idClient = getIdAbonne(requete);
-			System.out.println("On a recuperer l'id de l'abonne ");
-			
-//			GESTION DE LA RECURRENCE 
-			System.out.println("Votre type de recurrence :");
-			Recurrence.afficherChoix();
-			String typeRecurrence = scanner.nextLine();
-
-			
-			
-			debutRecurrence = dateReservation;
-			if (typeRecurrence.equals("3"))
+				String idClient = getIdAbonne(requete,nomAbonne,prenomAbonne,codeSecret);
+			System.out.println("On a recuperer l'id de l'abonne : "+idClient);
+			if (idClient != null)
 			{
-				jourRecurrence = null;
+//			GESTION DE LA RECURRENCE 
+				System.out.println("Votre type de recurrence :");
+				Recurrence.afficherChoix();
+				String typeRecurrence = scanner.nextLine();
+				
+				System.out.println("***********  1    *************");
+				
+				debutRecurrence = dateReservation;
+				if (typeRecurrence.equals("3"))
+				{
+					jourRecurrence = null;
+				}
+				else
+				{
+					jourRecurrence = dateReservation;
+					
+				}
+				finRecurrence = getFinAbonnement(requete, idClient);
+				System.out.println("On sapprete a lance l'insertion de la recurrence avecdebut recurrence :"+debutRecurrence +"| et finReccurence : "+finRecurrence);
+				System.out.println("La date de reservation : "+dateReservation);
+				String idRecurrence = null; 
+				
+				idRecurrence = getIdRecurrence(requete, idRecurrence);
+				
+				insererRecurence(requete,idRecurrence, typeRecurrence,jourRecurrence,debutRecurrence,finRecurrence);
+				
+				insererReservation(requete,idRecurrence, adresseStation, idClient,dateReservation);
+				
+//			idRecurrence, #adresseStation, #idClient, idReservation, dateReservation
+				
 			}
 			else
 			{
-				jourRecurrence = dateReservation;
-				
+				System.out.println("Desoler mais vous n'avez pas entrer les bonnes informations !");
 			}
-			insererRecurence(requete, typeRecurrence,jourRecurrence,debutRecurrence);
 			
-			
-//			idRecurrence, #adresseStation, #idClient, idReservation, dateReservation
-//			insererReservation(nom, prenom, dateDeNaissance,sexe,adresse,codeCB);
 		} 
 		catch (SQLException e1) 
 		{
@@ -84,27 +99,89 @@ public class Reservation
 		
 	}
 
-	private void insererRecurence(Statement requete, String typeRecurrence, String jourRecurrence, String debutRecurrence) 
+	
+
+	
+	private void insererReservation(Statement requete, String idRecurrence, String adresseStation,
+			String idClient, String dateReservation) throws SQLException
+	{
+		String requeteOracle;
+		ResultSet resultat;
+		
+		requeteOracle = "insert into RESERVATION values (Reservation_seq.nextVal,'"+adresseStation+"',"+idClient+","+idRecurrence+",to_date('"+dateReservation+"', 'dd/mm/yyyy'))";
+		System.out.println("La requete est : "+requeteOracle);
+		resultat = requete.executeQuery(requeteOracle);
+		System.out.println("On a inserer une reservation");
+			
+	}
+
+	private void insererRecurence(Statement requete, String idRecurrence, String typeRecurrence, String jourRecurrence, String debutRecurrence, String finRecurrence) throws SQLException 
 	{
 		//TODO inserer une recurrence
 		String requeteOracle;
 		ResultSet resultat;
 		
 		
-		requeteOracle = "insert into CLIENT values ("+idClient+","+ codeSecret +","+codeCB +")";
-
+		
+		requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",to_date('"+ jourRecurrence +"', 'dd/mm/yyyy'),to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
+		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
 		System.out.println("On a inserer une recurrence");
+		
+		//on insere la reservation
 	}
 
-	private String getIdAbonne(Statement requete) throws SQLException 
+	/**
+	 * Retourne l'idRecurrence de la sequence actuelle
+	 * @param requete
+	 * @param idRecurrence
+	 * @return
+	 * @throws SQLException
+	 */
+	private String getIdRecurrence(Statement requete, String idRecurrence)
+			throws SQLException 
+	{
+		
+		String requeteOracle = "SELECT recurrence_seq.nextval from dual";
+		ResultSet resultat = requete.executeQuery(requeteOracle);
+		
+		while(resultat.next())
+		{ // récupération des résultats
+			System.out.println("On recupere les resultats");
+			idRecurrence = resultat.getString("nextval");
+			System.out.println("idRecurrence :"+idRecurrence);
+		}
+		return idRecurrence;
+	}
+
+	
+	private String getFinAbonnement(Statement requete,String idClient) throws SQLException 
+	{
+		String finAbonnement = null;
+		System.out.println("On est dans getFinAbonnement");
+		String requeteOracle = "SELECT dateFinAbonnement FROM Abonne"
+								+ " WHERE idClient = "+idClient;
+		ResultSet resultat = requete.executeQuery(requeteOracle);
+		System.out.println("FIN EXEC REQ");
+		while(resultat.next())
+		{ // récupération des résultats
+			System.out.println("On recupere les resultats");
+			finAbonnement = resultat.getString("dateFinAbonnement");
+			System.out.println("finAbonnement :"+finAbonnement+" ,pour le client :"+idClient);
+		}
+		System.out.println("On sort de getFinAbonnement");
+		return finAbonnement;		
+	}
+
+	
+	private String getIdAbonne(Statement requete, String nomAbonne, String prenomAbonne, String codeSecret) throws SQLException 
 	{
 		// TODO Auto-generated method stub
 		
 		ResultSet resultat;
 		String requeteOracle = "SELECT CLIENT.idClient FROM ABONNE INNER JOIN "
-				+ "CLIENT ON (ABONNE.idClient = CLIENT.idClient) WHERE NOMABONNE = 'Devis'"
-				+ " and  PRENOMABONNE = 'Ivan' and codeSecret = 4277";
+				+ "CLIENT ON (ABONNE.idClient = CLIENT.idClient) WHERE NOMABONNE = '"+nomAbonne+"'"
+				+ " and  PRENOMABONNE = '"+prenomAbonne+"' and codeSecret = "+codeSecret;
 		
 		resultat = requete.executeQuery(requeteOracle);
 		String idClient = null; 
