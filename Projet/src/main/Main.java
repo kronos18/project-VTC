@@ -36,7 +36,7 @@ public class Main
 			menuPrincipal.lancer();
 			
 			// exécution d'une requête
-			/*ResultSet resultat = requete.executeQuery(requeteOracle);
+			/*ResultSet resultat = requ1ete.executeQuery(requeteOracle);
 			afficherResultats(resultat);
 
 			//on ferme la requete
@@ -60,7 +60,7 @@ public class Main
 		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver()); // Chargement du pilote
 		System.out.println("On test la connection a la base de donnee");
 
-		Connection base = DriverManager.getConnection ("jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:ufrima","devisi", "bd2015"); // connexion
+		Connection base = DriverManager.getConnection ("jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:ufrima","espritm", "bd2015"); // connexion
 		//			Connection base = DriverManager.getConnection ("jdbc:oracle:thin:@localhost:1521:ufrima","devisi", "bd2015"); // connexion
 		System.out.println("On s'est connecte ...");
 		return base;
