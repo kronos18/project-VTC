@@ -32,7 +32,7 @@ public class Reservation
 			
 			String finRecurrence;
 			String debutRecurrence;
-			String jourRecurrence;
+			String jourRecurrence = null;
 
 			System.out.println("Votre nom :");
 			String nomAbonne = scanner.nextLine();
@@ -57,28 +57,28 @@ public class Reservation
 				System.out.println("Votre type de recurrence :");
 				Recurrence.afficherChoix();
 				String typeRecurrence = scanner.nextLine();
+				String idRecurrence = null; 
 				
 				System.out.println("***********  1    *************");
 				
 				debutRecurrence = dateReservation;
-				if (typeRecurrence.equals("3"))
-				{
-					jourRecurrence = null;
-				}
-				else
-				{
-					jourRecurrence = dateReservation;
-					
-				}
 				finRecurrence = getFinAbonnement(requete, idClient);
 				System.out.println("On sapprete a lance l'insertion de la recurrence avecdebut recurrence :"+debutRecurrence +"| et finReccurence : "+finRecurrence);
 				System.out.println("La date de reservation : "+dateReservation);
-				String idRecurrence = null; 
 				
-				idRecurrence = getIdRecurrence(requete, idRecurrence);
+
+				jourRecurrence = miseAjourDuJourDeLaRecurrence(dateReservation, typeRecurrence);
 				
-				insererRecurence(requete,idRecurrence, typeRecurrence,jourRecurrence,debutRecurrence,finRecurrence);
-				
+				if (!typeRecurrence.equals("0"))
+				{
+					idRecurrence = getIdRecurrence(requete, idRecurrence);
+					insererRecurence(requete,idRecurrence, typeRecurrence,jourRecurrence,debutRecurrence,finRecurrence);
+					
+				}
+				else
+				{
+					idRecurrence = null;
+				}
 				insererReservation(requete,idRecurrence, adresseStation, idClient,dateReservation);
 				
 //			idRecurrence, #adresseStation, #idClient, idReservation, dateReservation
@@ -97,6 +97,20 @@ public class Reservation
 		}
 		
 		
+	}
+
+	private String miseAjourDuJourDeLaRecurrence(String dateReservation, String typeRecurrence) {
+		String jourRecurrence;
+		if (typeRecurrence.equals("3"))
+		{
+			jourRecurrence = null;
+		}
+		else
+		{
+			jourRecurrence = dateReservation;
+			
+		}
+		return jourRecurrence;
 	}
 
 	
@@ -121,9 +135,19 @@ public class Reservation
 		String requeteOracle;
 		ResultSet resultat;
 		
+		String jourRecurrenceTraitement;
 		
-		
-		requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",to_date('"+ jourRecurrence +"', 'dd/mm/yyyy'),to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
+		jourRecurrenceTraitement = jourRecurrence;
+		if (jourRecurrenceTraitement != null) 
+		{
+			requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",to_date('"+ jourRecurrence +"', 'dd/mm/yyyy'),to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
+			
+		}
+		else
+		{
+			requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",null,to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
+			
+		}
 		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
 		System.out.println("On a inserer une recurrence");

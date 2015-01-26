@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 import abonnement.Abonne;
+import abonnement.Location;
 import abonnement.Reservation;
 
 
@@ -68,8 +69,9 @@ public class MenuPrincipalUtilisateur implements Menu
 			reservation.lancerProcedureReservation();
 			break;
 		case 3:
-			
-			menuPrincipal.lancer();
+			Location location;
+			location = new Location(base);
+			location.lancerProcedureLocation();
 			break;
 		case 4:
 			this.aQuitte = true;

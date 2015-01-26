@@ -6,6 +6,7 @@ public class Recurrence {
 	{
 		// TODO Auto-generated method stub
 		System.out.println("Choix de recurrence :");
+		System.out.println("0 : aucune recurrence ");
 		System.out.println("1 : hebdomadaire ");
 		System.out.println("2 : mensuel ");
 		System.out.println("3 : tout les jours de la semaine ");
