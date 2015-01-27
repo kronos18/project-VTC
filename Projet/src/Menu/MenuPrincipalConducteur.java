@@ -27,7 +27,6 @@ public class MenuPrincipalConducteur implements Menu {
 
 	@Override
 	public String getNomMenu() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -73,7 +72,7 @@ public class MenuPrincipalConducteur implements Menu {
 		case 5:
 			this.aQuitte = true;
 			System.out.println("Merci d'avoir utiliser l'application !");
-			System.out.println("A très bientot !");
+			System.out.println("A tres bientot !");
 			break;
 			
 		default:
