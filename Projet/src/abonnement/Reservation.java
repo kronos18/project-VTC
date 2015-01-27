@@ -18,12 +18,10 @@ public class Reservation
 
 	public Reservation(Connection base) {
 		this.base = base;
-		// TODO Auto-generated constructor stub
 	}
 
 	public void lancerProcedureReservation() 
 	{
-		// TODO Auto-generated method stub
 		ResultSet resultat;
 		Statement requete;
 		try {
@@ -79,7 +77,7 @@ public class Reservation
 				}
 				else
 				{
-					idRecurrence = null;
+					idRecurrence = "0";
 				}
 				insererReservation(requete,idRecurrence, adresseStation, idClient,dateReservation);
 				
@@ -94,7 +92,6 @@ public class Reservation
 		} 
 		catch (SQLException e1) 
 		{
-			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		}
 		
@@ -114,9 +111,6 @@ public class Reservation
 		}
 		return jourRecurrence;
 	}
-
-	
-
 	
 	private void insererReservation(Statement requete, String idRecurrence, String adresseStation,
 			String idClient, String dateReservation) throws SQLException
@@ -133,7 +127,6 @@ public class Reservation
 
 	private void insererRecurence(Statement requete, String idRecurrence, String typeRecurrence, String jourRecurrence, String debutRecurrence, String finRecurrence) throws SQLException 
 	{
-		//TODO inserer une recurrence
 		String requeteOracle;
 		ResultSet resultat;
 		
@@ -154,16 +147,8 @@ public class Reservation
 		resultat = requete.executeQuery(requeteOracle);
 		System.out.println("On a inserer une recurrence");
 		
-		//on insere la reservation
 	}
 
-	/**
-	 * Retourne l'idRecurrence de la sequence actuelle
-	 * @param requete
-	 * @param idRecurrence
-	 * @return
-	 * @throws SQLException
-	 */
 	private String getIdRecurrence(Statement requete, String idRecurrence)
 			throws SQLException 
 	{
@@ -179,7 +164,6 @@ public class Reservation
 		}
 		return idRecurrence;
 	}
-
 	
 	private String getFinAbonnement(Statement requete,String idClient) throws SQLException 
 	{
@@ -198,12 +182,9 @@ public class Reservation
 		System.out.println("On sort de getFinAbonnement");
 		return finAbonnement;		
 	}
-
 	
 	private String getIdAbonne(Statement requete, String nomAbonne, String prenomAbonne, String codeSecret) throws SQLException 
 	{
-		// TODO Auto-generated method stub
-		
 		ResultSet resultat;
 		String requeteOracle = "SELECT CLIENT.idClient FROM ABONNE INNER JOIN "
 				+ "CLIENT ON (ABONNE.idClient = CLIENT.idClient) WHERE NOMABONNE = '"+nomAbonne+"'"
