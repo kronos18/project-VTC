@@ -25,7 +25,7 @@ public class OrdreRegulation {
 		{
 
 			Statement requete = base.createStatement();
-			requeteOracle = "Select * from OrdreRegulation inner join Execution on execution.idOrdreRegulation = OrdreRegulation.idOrdreRegulation where idRoutines = "+idRoutine+";";
+			requeteOracle = "Select * from OrdreRegulation inner join Execution on execution.idOrdreRegulation = OrdreRegulation.idOrdreRegulation where idRoutines = "+idRoutine;
 			
 			resultat = requete.executeQuery(requeteOracle);
 	
@@ -61,7 +61,7 @@ public class OrdreRegulation {
 		String ordreEnCours = scan.nextLine();
 		
 		int idOrdreRegulation = 0;
-		requeteOracle+="'"+ ordreEnCours + "';";
+		requeteOracle+="'"+ ordreEnCours + "'";
 		try
 		{
 			Statement requete = base.createStatement();
@@ -91,7 +91,7 @@ public class OrdreRegulation {
 		
 		System.out.print(" Indiquer la routine que vous etes en train de faire ?");
 		int idRoutine = Integer.parseInt(scan.nextLine());
-		requeteOracle += " where idRoutines = " + idRoutine + " and idOrdreRegulation = " + idOrdreRegulation +";";
+		requeteOracle += " where idRoutines = " + idRoutine + " and idOrdreRegulation = " + idOrdreRegulation ;
 		try
 		{
 			Statement requete = base.createStatement();

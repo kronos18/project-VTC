@@ -65,7 +65,7 @@ public class Action {
 		else
 			requeteOracle+="'annule'";
 
-		requeteOracle+=");";
+		requeteOracle+=")";
 		
 		try
 		{

@@ -48,7 +48,7 @@ public class Regulation {
 		{
 			System.out.println("Impossible d afficher les routines");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requ�te �tait : "+requeteOracle);
+			System.out.println("La requete etait : "+requeteOracle);
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class Regulation {
 		{
 
 			Statement requete = base.createStatement();
-			requeteOracle = "Select * from OrdreRegulation inner join Execution on execution.idOrdreRegulation = OrdreRegulation.idOrdreRegulation where idRoutines = "+idRoutine+";";
+			requeteOracle = "Select * from OrdreRegulation inner join Execution on execution.idOrdreRegulation = OrdreRegulation.idOrdreRegulation where idRoutines = "+idRoutine;
 			
 			resultat = requete.executeQuery(requeteOracle);
 	
@@ -79,14 +79,14 @@ public class Regulation {
 		{
 			System.out.println("Impossible d afficher les ordres des routines");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requ�te �tait : "+requeteOracle);
+			System.out.println("La requete etait : "+requeteOracle);
 		}
 	}
 
 	
 	public void DemarrerRoutines() {
 		
-		System.out.print("La routine que vous souhaitez r�aliser :");
+		System.out.print("La routine que vous souhaitez realiser :");
 		int idRoutine = 0;
 		Scanner scan = new Scanner(System.in);
 		idRoutine = scan.nextInt();
@@ -95,7 +95,7 @@ public class Regulation {
 		
 		System.out.print("Nous vous reservons le vehicule et la routine pour aujourd'hui");
 		
-		String requeteOracle = "insert into regulation values(" + idRoutine + "," + idVehicule + ", sysdate);";
+		String requeteOracle = "insert into regulation values(" + idRoutine + "," + idVehicule + ", sysdate)";
 		
 		Statement requete;
 		try {
@@ -104,7 +104,7 @@ public class Regulation {
 		} catch (SQLException e) {
 			System.out.println("Impossible de demarrer la routine : creation de la regulation echec");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requ�te �tait : "+requeteOracle);
+			System.out.println("La requete etait : "+requeteOracle);
 		}
 		
 		
@@ -113,7 +113,7 @@ public class Regulation {
 		Scanner scan2 = new Scanner(System.in);
 		idEmp = scan2.nextInt();
 		
-		requeteOracle = "insert into Conduit values(" + idVehicule + "," + idEmp + ", sysdate);";
+		requeteOracle = "insert into Conduit values(" + idVehicule + "," + idEmp + ", sysdate)";
 
 		try {
 			requete = base.createStatement();
@@ -121,7 +121,7 @@ public class Regulation {
 		} catch (SQLException e) {
 			System.out.println("Impossible de demarrer la routine :  : creation de la conduite echec");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requ�te �tait : "+requeteOracle);
+			System.out.println("La requete etait : "+requeteOracle);
 		}
 
 	}
@@ -135,7 +135,7 @@ public class Regulation {
 		String placeDisponible = "";
 		try {
 			Statement requete = base.createStatement();
-			requeteOracle ="select * from vehicule where idVehicule not in(select idVehicule from regulation where trunc(dateExecution) = trunc(sysdate));";
+			requeteOracle ="select * from vehicule where idVehicule not in(select idVehicule from regulation where trunc(dateExecution) = trunc(sysdate))";
 			ResultSet resultat = requete.executeQuery(requeteOracle);
 
 			while(resultat.next())
@@ -157,7 +157,7 @@ public class Regulation {
 		} catch (SQLException e) {
 			System.out.println("Impossible d afficher les voitures disponible pour aujourd'hui");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requ�te �tait : "+requeteOracle);
+			System.out.println("La requete etait : "+requeteOracle);
 		}
 		
 		System.out.print("Le vehicule que vous souhaitez prendre :");
