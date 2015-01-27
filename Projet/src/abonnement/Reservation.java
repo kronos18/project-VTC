@@ -49,8 +49,10 @@ public class Reservation
 			System.out.println("Votre code secret :");
 			String codeSecret = scanner.nextLine();
 
-				String idClient = getIdAbonne(requete,nomAbonne,prenomAbonne,codeSecret);
+			String idClient = getIdAbonne(requete,nomAbonne,prenomAbonne,codeSecret);
+			
 			System.out.println("On a recuperer l'id de l'abonne : "+idClient);
+			
 			if (idClient != null)
 			{
 //			GESTION DE LA RECURRENCE 
@@ -63,7 +65,7 @@ public class Reservation
 				
 				debutRecurrence = dateReservation;
 				finRecurrence = getFinAbonnement(requete, idClient);
-				System.out.println("On sapprete a lance l'insertion de la recurrence avecdebut recurrence :"+debutRecurrence +"| et finReccurence : "+finRecurrence);
+				System.out.println("On s'apprete a lance l'insertion de la recurrence avec debut recurrence :"+debutRecurrence +"| et finReccurence : "+finRecurrence);
 				System.out.println("La date de reservation : "+dateReservation);
 				
 
