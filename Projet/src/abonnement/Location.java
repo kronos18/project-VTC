@@ -254,7 +254,7 @@ public class Location
 		
 		requeteOracle = "insert into LOCATION values (Location_seq.nextVal,"+ idTarif +","+idClient+","+idVelo+",sysdate ,NULL,'"+ stationDepart +"',NULL)";
 		
-//		System.out.println("La requete est : "+requeteOracle);
+		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
 		System.out.println("Votre location a bien ete pris en compte !");
 	}
