@@ -25,7 +25,7 @@ public class Regulation {
 			ResultSet resultat;
 			Boolean resultFound = false;
 	
-			requeteOracle= "select distinct idroutines from execution where idroutines not in (select idRoutines from regulation where trunc(dateExecution) = trunc(sysdate));";
+			requeteOracle= "select distinct idroutines from execution where idroutines not in (select idRoutines from regulation where trunc(dateExecution) = trunc(sysdate))";
 			
 			resultat = requete.executeQuery(requeteOracle);
 			
@@ -42,13 +42,13 @@ public class Regulation {
 				afficherOrdreRegulation(idRoutine);
 			}
 			if (!resultFound)
-				System.out.println("Aucune routine à effectuer");
+				System.out.println("Aucune routine ï¿½ effectuer");
 		}
 		catch (SQLException e)
 		{
 			System.out.println("Impossible d afficher les routines");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requête était : "+requeteOracle);
+			System.out.println("La requï¿½te ï¿½tait : "+requeteOracle);
 		}
 	}
 	
@@ -79,14 +79,14 @@ public class Regulation {
 		{
 			System.out.println("Impossible d afficher les ordres des routines");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requête était : "+requeteOracle);
+			System.out.println("La requï¿½te ï¿½tait : "+requeteOracle);
 		}
 	}
 
 	
 	public void DemarrerRoutines() {
 		
-		System.out.print("La routine que vous souhaitez réaliser :");
+		System.out.print("La routine que vous souhaitez rï¿½aliser :");
 		int idRoutine = 0;
 		Scanner scan = new Scanner(System.in);
 		idRoutine = scan.nextInt();
@@ -104,7 +104,7 @@ public class Regulation {
 		} catch (SQLException e) {
 			System.out.println("Impossible de demarrer la routine : creation de la regulation echec");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requête était : "+requeteOracle);
+			System.out.println("La requï¿½te ï¿½tait : "+requeteOracle);
 		}
 		
 		
@@ -121,7 +121,7 @@ public class Regulation {
 		} catch (SQLException e) {
 			System.out.println("Impossible de demarrer la routine :  : creation de la conduite echec");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requête était : "+requeteOracle);
+			System.out.println("La requï¿½te ï¿½tait : "+requeteOracle);
 		}
 
 	}
@@ -157,7 +157,7 @@ public class Regulation {
 		} catch (SQLException e) {
 			System.out.println("Impossible d afficher les voitures disponible pour aujourd'hui");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requête était : "+requeteOracle);
+			System.out.println("La requï¿½te ï¿½tait : "+requeteOracle);
 		}
 		
 		System.out.print("Le vehicule que vous souhaitez prendre :");

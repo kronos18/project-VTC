@@ -37,7 +37,7 @@ public class MenuPrincipalConducteur implements Menu {
 		System.out.println("Menu Conducteur ! ");
 		System.out.println("Que desirez-vous ? ");
 		System.out.println("---------------------------------------------");
-		System.out.println("1 : Consulter les routines à effectuer !");
+		System.out.println("1 : Consulter les routines a effectuer !");
 		System.out.println("2 : Demarrer une routine !");
 		System.out.println("3 : Valider un ordre de regulation !");
 		System.out.println("4 : Ajouter une action !");
@@ -53,16 +53,16 @@ public class MenuPrincipalConducteur implements Menu {
 		choix = scan.nextInt();
 		Connection base = menuPrincipal.getBase();
 
-		Regulation reg = new Regulation(base);
+		Regulation regulation = new Regulation(base);
 		OrdreRegulation or = new OrdreRegulation(base);
 		Action a = new Action(base);
 		switch (choix) 
 		{
 		case 1:
-			reg.AfficherRoutines();
+			regulation.AfficherRoutines();
 			break;
 		case 2:
-			reg.DemarrerRoutines();
+			regulation.DemarrerRoutines();
 			break;
 		case 3:
 			or.ValiderOrdre();
