@@ -33,10 +33,10 @@ public class MenuPrincipal implements Menu
 	@Override
 	public void afficherMenu() 
 	{
-		System.out.println("Bienvenue dans l'application VePick ! ");
+		System.out.println("\n\nBienvenue dans l'application VePick ! ");
 		System.out.println("Que desirez-vous ? ");
 		System.out.println("---------------------------------------------");
-		System.out.println("1 : Acceder a l'interface utilisateur !");
+		System.out.println("1 : Acceder a l'interface Utilisateur !");
 		System.out.println("2 : Acceder a l'interface Conducteur !");
 		System.out.println("3 : Acceder a l'interface Superviseur !");
 		System.out.println("4 : Quitter l'application !");
@@ -55,7 +55,9 @@ public class MenuPrincipal implements Menu
 		
 		int choix = 0;
 		Scanner scan = new Scanner(System.in);
+		
 		choix = scan.nextInt();
+		System.out.println("\n");
 		switch (choix) 
 		{
 		case 1:

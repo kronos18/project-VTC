@@ -32,42 +32,36 @@ public class Reservation
 			String debutRecurrence;
 			String jourRecurrence = null;
 
-			System.out.println("Votre nom :");
+			System.out.print("Votre nom : ");
 			String nomAbonne = scanner.nextLine();
-			System.out.println("Votre prenom :");
+			System.out.print("Votre prenom : ");
 			String prenomAbonne = scanner.nextLine();
 
-			System.out.println("La date de reservation :");
+			System.out.print("La date de reservation : ");
 
 			String dateReservation = scanner.nextLine();
 			
 			Location.afficherLesStations(requete);
-			System.out.println("L'adresse de la station a laquelle vous souhaitez reserver :");
+			System.out.print("L'adresse de la station a laquelle vous souhaitez reserver : ");
 			String adresseStation = scanner.nextLine();
 			
-			System.out.println("Votre code secret :");
+			System.out.print("Votre code secret : ");
 			String codeSecret = scanner.nextLine();
 
 			String idClient = getIdAbonne(requete,nomAbonne,prenomAbonne,codeSecret);
 			
-			System.out.println("On a recuperer l'id de l'abonne : "+idClient);
 			
 			if (idClient != null)
 			{
 //			GESTION DE LA RECURRENCE 
-				System.out.println("Votre type de recurrence :");
+				System.out.println("Votre type de recurrence : ");
 				Recurrence.afficherChoix();
+				System.out.println("Votre choix : ");
 				String typeRecurrence = scanner.nextLine();
 				String idRecurrence = null; 
 				
-				System.out.println("***********  1    *************");
-				
 				debutRecurrence = dateReservation;
 				finRecurrence = getFinAbonnement(requete, idClient);
-				System.out.println("On s'apprete a lance l'insertion de la recurrence avec debut recurrence :"+debutRecurrence +"| et finReccurence : "+finRecurrence);
-				System.out.println("La date de reservation : "+dateReservation);
-				
-
 				jourRecurrence = miseAjourDuJourDeLaRecurrence(dateReservation, typeRecurrence);
 				
 				if (!typeRecurrence.equals("0"))
@@ -81,8 +75,6 @@ public class Reservation
 					idRecurrence = "0";
 				}
 				insererReservation(requete,idRecurrence, adresseStation, idClient,dateReservation);
-				
-//			idRecurrence, #adresseStation, #idClient, idReservation, dateReservation
 				
 			}
 			else
@@ -121,9 +113,8 @@ public class Reservation
 		ResultSet resultat;
 		
 		requeteOracle = "insert into RESERVATION values (Reservation_seq.nextVal,'"+adresseStation+"',"+idClient+","+idRecurrence+",to_date('"+dateReservation+"', 'dd/mm/yyyy'))";
-		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
-		System.out.println("On a inserer une reservation");
+		System.out.println("Votre reservation a bien ete pris en compte ! ");
 			
 	}
 
@@ -145,9 +136,7 @@ public class Reservation
 		{
 			requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",null,to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
 		}
-		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
-		System.out.println("On a inserer une recurrence");		
 	}
 
 	
@@ -161,9 +150,7 @@ public class Reservation
 		
 		while(resultat.next())
 		{ // récupération des résultats
-			System.out.println("On recupere les resultats");
 			idRecurrence = resultat.getString("nextval");
-			System.out.println("idRecurrence :"+idRecurrence);
 		}
 		return idRecurrence;
 	}
@@ -171,18 +158,13 @@ public class Reservation
 	private String getFinAbonnement(Statement requete,String idClient) throws SQLException 
 	{
 		String finAbonnement = null;
-		System.out.println("On est dans getFinAbonnement");
 		String requeteOracle = "SELECT dateFinAbonnement FROM Abonne"
 								+ " WHERE idClient = "+idClient;
 		ResultSet resultat = requete.executeQuery(requeteOracle);
-		System.out.println("FIN EXEC REQ");
 		while(resultat.next())
 		{ // récupération des résultats
-			System.out.println("On recupere les resultats");
 			finAbonnement = resultat.getString("dateFinAbonnement");
-			System.out.println("finAbonnement :"+finAbonnement+" ,pour le client :"+idClient);
 		}
-		System.out.println("On sort de getFinAbonnement");
 		return finAbonnement;		
 	}
 	
@@ -198,9 +180,7 @@ public class Reservation
 		
 		while(resultat.next())
 		{ // récupération des résultats
-			System.out.println("On recupere l'id de l'abonne");
 			idClient = resultat.getString("idClient");
-			System.out.println("idclient :"+idClient);
 		}
 		return idClient;
 	}

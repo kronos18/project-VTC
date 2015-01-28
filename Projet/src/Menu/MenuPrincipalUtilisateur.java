@@ -89,8 +89,6 @@ public class MenuPrincipalUtilisateur implements Menu
 			break;
 		case 6:
 			this.aQuitte = true;
-			System.out.println("Merci d'avoir utiliser l'application !");
-			System.out.println("A très bientot !");
 			break;
 
 		default:

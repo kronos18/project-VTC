@@ -14,7 +14,6 @@ public class Main
 	public static void main(String[] args)
 	{
 
-		System.out.println("On test la connection a la base de donnee");
 
 		try 
 		{
@@ -23,33 +22,15 @@ public class Main
 			Statement requete = base.createStatement(); // création du descripteur de requête
 
 			
-			/*Bdd baseDeDonnee = new Bdd();
-			//connexion a la base de donnee
-			baseDeDonnee.connexion();
-			
-			Statement requete;
-			requete = Bdd.getInstance().createStatement();*/
-			
-			
-			
 			Menu menuPrincipal = new MenuPrincipal(base);
 			menuPrincipal.lancer();
-			
-			// exécution d'une requête
-			/*ResultSet resultat = requ1ete.executeQuery(requeteOracle);
-			afficherResultats(resultat);
-
-			//on ferme la requete
 			requete.close();
-			//on ferme le resultat
-			resultat.close();
-			base.close(); // fermeture de la connexion
-
-			afficherMessage();*/
+			base.close();
+			
 		}
 		catch (Exception err)
 		{
-			System.out.println("Une erreur, Oh Oh!");
+			System.out.println("Erreur de connexion a la base de donnee");
 		} // Attention il faut capturer les exceptions !
 	}
 
@@ -58,11 +39,10 @@ public class Main
 		System.out.println("Connexion en cours ...");
 
 		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver()); // Chargement du pilote
-		System.out.println("On test la connection a la base de donnee");
 
 		Connection base = DriverManager.getConnection ("jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:ufrima","devisi", "bd2015"); // connexion
 		//			Connection base = DriverManager.getConnection ("jdbc:oracle:thin:@localhost:1521:ufrima","devisi", "bd2015"); // connexion
-		System.out.println("On s'est connecte ...");
+		System.out.println("Connexion etablie !\n\n");
 		return base;
 	}
 
