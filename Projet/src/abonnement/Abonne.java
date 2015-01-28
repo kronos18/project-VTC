@@ -100,7 +100,6 @@ public class Abonne
 	private ResultSet insererUnClient(String codeCB, Statement requete, String codeSecret, String idClient)
 			throws SQLException 
 	{
-
 		String requeteOracle;
 		ResultSet resultat;
 		
@@ -110,9 +109,11 @@ public class Abonne
 		resultat = requete.executeQuery(requeteOracle);
 		System.out.println("On a inserer un client");
 		return resultat;
+		
 	}
 
-	private String genererUnCodeSecret(Random random) {
+	private String genererUnCodeSecret(Random random)
+	{
 		String codeSecret = String.valueOf(random.nextInt(9));
 		codeSecret = codeSecret.concat(String.valueOf(random.nextInt(9)));
 		codeSecret = codeSecret.concat(String.valueOf(random.nextInt(9)));

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 import abonnement.Abonne;
+import abonnement.DepotVelo;
 import abonnement.Location;
 import abonnement.Reservation;
 
@@ -33,9 +34,10 @@ public class MenuPrincipalUtilisateur implements Menu
 		System.out.println("---------------------------------------------");
 		System.out.println("1 : Creer un abonnement !");
 		System.out.println("2 : Effectuer une reservation !");
-		System.out.println("3 : Effectuer une location !!");
-		System.out.println("4 : Retourner au menu principal !");
-		System.out.println("5 : Afficher les stations Vplus Vmoins !");
+		System.out.println("3 : Effectuer une location !");
+		System.out.println("4 : Deposer un velo !");
+		System.out.println("5 : Retourner au menu principal !");
+		System.out.println("6 : Afficher les stations Vplus Vmoins !");
 		System.out.println("---------------------------------------------");
 		System.out.print("Votre choix : ");
 	}
@@ -75,6 +77,11 @@ public class MenuPrincipalUtilisateur implements Menu
 			location.lancerProcedureLocation();
 			break;
 		case 4:
+			DepotVelo depotVelo;
+			depotVelo = new DepotVelo(base);
+			depotVelo.lancerProcedureDeDepot();
+			break;
+		case 5:
 			this.aQuitte = true;
 			System.out.println("Merci d'avoir utiliser l'application !");
 			System.out.println("A très bientot !");

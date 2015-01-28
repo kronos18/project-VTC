@@ -41,6 +41,7 @@ public class Reservation
 
 			String dateReservation = scanner.nextLine();
 			
+			Location.afficherLesStations(requete);
 			System.out.println("L'adresse de la station a laquelle vous souhaitez reserver :");
 			String adresseStation = scanner.nextLine();
 			
@@ -112,6 +113,7 @@ public class Reservation
 		return jourRecurrence;
 	}
 	
+	
 	private void insererReservation(Statement requete, String idRecurrence, String adresseStation,
 			String idClient, String dateReservation) throws SQLException
 	{
@@ -125,6 +127,8 @@ public class Reservation
 			
 	}
 
+	
+	
 	private void insererRecurence(Statement requete, String idRecurrence, String typeRecurrence, String jourRecurrence, String debutRecurrence, String finRecurrence) throws SQLException 
 	{
 		String requeteOracle;
@@ -135,20 +139,19 @@ public class Reservation
 		jourRecurrenceTraitement = jourRecurrence;
 		if (jourRecurrenceTraitement != null) 
 		{
-			requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",to_date('"+ jourRecurrence +"', 'dd/mm/yyyy'),to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
-			
+			requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",to_date('"+ jourRecurrence +"', 'dd/mm/yyyy'),to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";			
 		}
 		else
 		{
 			requeteOracle = "insert into RECURRENCE values ("+idRecurrence+","+typeRecurrence+",null,to_date('"+ debutRecurrence +"', 'dd/mm/yyyy'),to_date('"+ finRecurrence +"', 'yyyy-mm-dd:HH24:MI:SS'))";
-			
 		}
 		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
-		System.out.println("On a inserer une recurrence");
-		
+		System.out.println("On a inserer une recurrence");		
 	}
 
+	
+	
 	private String getIdRecurrence(Statement requete, String idRecurrence)
 			throws SQLException 
 	{
