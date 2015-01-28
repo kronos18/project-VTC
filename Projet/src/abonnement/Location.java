@@ -81,8 +81,6 @@ public class Location
 			System.out.println("Quelle station ?");
 			afficherLesStations(requete);
 			
-			
-			
 			System.out.println("Votre choix : ");
 			String adresseStation = scanner.nextLine();
 			
@@ -91,8 +89,9 @@ public class Location
 			String idBornette = scanner.nextLine();
 
 			idVelo = getIdVelo(requete,idBornette);
+			idClient = getIdClient(requete,codeSecret);
 			System.out.println("lid velo est : "+idVelo);
-//			insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
+			insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
 					
 		}
 		catch (SQLException e) 
@@ -105,6 +104,23 @@ public class Location
 		
 	}
 	
+	public static String getIdClient(Statement requete, String codeSecret) throws SQLException
+	{
+		ResultSet resultat;
+		String requeteOracle = "SELECT idClient FROM Client WHERE codeSecret = "+codeSecret;
+		
+		resultat = requete.executeQuery(requeteOracle);
+		String idClient = null; 
+		
+		while(resultat.next())
+		{ // récupération des résultats
+			System.out.println("On recupere l'id de l'abonne");
+			idClient = resultat.getString("idClient");
+			System.out.println("idclient :"+idClient);
+		}
+		return idClient;
+	}
+
 	private String genererUnCodeSecret(Random random)
 	{
 		String codeSecret = String.valueOf(random.nextInt(9));
@@ -188,7 +204,7 @@ public class Location
 	 * @param requete
 	 * @throws SQLException
 	 */
-	private void afficherLesStations(Statement requete) throws SQLException 
+	public static void afficherLesStations(Statement requete) throws SQLException 
 	{
 		String requeteOracle;
 		String adresseStation;
@@ -254,7 +270,7 @@ public class Location
 		
 		requeteOracle = "insert into LOCATION values (Location_seq.nextVal,"+ idTarif +","+idClient+","+idVelo+",sysdate ,NULL,'"+ stationDepart +"',NULL)";
 		
-		System.out.println("La requete est : "+requeteOracle);
+//		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
 		System.out.println("Votre location a bien ete pris en compte !");
 	}
