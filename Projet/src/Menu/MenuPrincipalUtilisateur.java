@@ -29,9 +29,9 @@ public class MenuPrincipalUtilisateur implements Menu
 	@Override
 	public void afficherMenu() 
 	{
+		System.out.println("---------------------------------------------");
 		System.out.println("Menu Utilisateur ! ");
 		System.out.println("Que desirez-vous ? ");
-		System.out.println("---------------------------------------------");
 		System.out.println("1 : Creer un abonnement !");
 		System.out.println("2 : Effectuer une reservation !");
 		System.out.println("3 : Effectuer une location !");

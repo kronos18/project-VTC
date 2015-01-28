@@ -59,6 +59,7 @@ public class Action {
 		System.out.println("Y etes vous arrive ?");
 		System.out.println("1 - oui");
 		System.out.println("2 - non");
+		System.out.print("choix :");
 		choix = Integer.parseInt(scan.nextLine());
 		if(choix == 1)
 			requeteOracle+="'effectuee'";
