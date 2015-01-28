@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 import abonnement.Abonne;
-import abonnement.Bornette;
 import abonnement.Reservation;
 import abonnement.Station;
 import abonnement.Vehicule;
@@ -62,7 +61,6 @@ public class MenuPrincipalSuperviseur implements Menu {
 		choix = scan.nextInt();
 		Connection base = menuPrincipal.getBase();
 		Vehicule vehicule;
-		Bornette bornette;
 		Station station;
 		
 		switch (choix) 
@@ -78,8 +76,8 @@ public class MenuPrincipalSuperviseur implements Menu {
 			break;
 
 		case 3:
-			bornette = new Bornette(base);
-			bornette.AfficherNbVeloDansStation();
+			station = new Station(base);
+			station.AfficherNbVeloDansStation();
 			break;
 
 		case 4:
