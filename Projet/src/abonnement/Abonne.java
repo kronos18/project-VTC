@@ -22,7 +22,7 @@ public class Abonne
 
 	public void lancerProcedureAbonnement() 
 	{
-		System.out.println("------------------------------");
+		System.out.println("---------------------------------------------");
 		System.out.println("Procedure d'abonnement");
 		Scanner scanner = new Scanner(System.in);
 
@@ -58,7 +58,6 @@ public class Abonne
 		System.out.print("Votre code de Carte bancaire (les developpeurs se gardent le droit de s'en servir) :");
 		String codeCB = scanner.nextLine();
 		insererAbonneDansLaBase(nom, prenom, dateDeNaissance,sexe,adresse,codeCB);
-		System.out.println("------------------------------");
 	}
 
 	private void insererAbonneDansLaBase(String nom, String prenom, String dateDeNaissance, String sexe, String adresse, String codeCB) 
@@ -72,10 +71,9 @@ public class Abonne
 
 			String codeSecret = genererUnCodeSecret(random);
 			
-			System.out.println("---------------------------------");
+			System.out.println("---------------------------------------------");
 			System.out.println(" Bienvenue parmis nous "+ prenom +" " + nom);
 			System.out.println(" Votre code secret est "+ codeSecret);
-			System.out.println("---------------------------------");
 			
 			requeteOracle = "SELECT client_seq.nextval from dual";
 			resultat = requete.executeQuery(requeteOracle);
@@ -116,9 +114,7 @@ public class Abonne
 		requeteOracle = "insert into CLIENT values ("+idClient+","+ codeSecret +","+codeCB +")";
 
 		resultat = requete.executeQuery(requeteOracle);
-		System.out.println("On a inserer un client");
 		return resultat;
-		
 	}
 
 	private String genererUnCodeSecret(Random random)
