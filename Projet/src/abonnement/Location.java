@@ -84,14 +84,22 @@ public class Location
 			System.out.println("Votre choix : ");
 			String adresseStation = scanner.nextLine();
 			
-			afficherLesBornettesDisponiblesALaStation(requete,adresseStation);
-			System.out.print("Quelle bornette ? : ");
-			String idBornette = scanner.nextLine();
-
-			idVelo = getIdVelo(requete,idBornette);
-			idClient = getIdClient(requete,codeSecret);
-			System.out.println("lid velo est : "+idVelo);
-			insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
+			boolean ilYaDesVelos = afficherLesBornettesDisponiblesALaStation(requete,adresseStation);
+			System.out.println("il y a des velo :" + ilYaDesVelos);
+			if (ilYaDesVelos) 
+			{
+				System.out.print("Quelle bornette ? : ");
+				String idBornette = scanner.nextLine();
+	
+				idVelo = getIdVelo(requete,idBornette);
+				idClient = getIdClient(requete,codeSecret);
+				System.out.println("lid velo est : "+idVelo);
+				insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
+			}
+			else
+			{
+				System.out.println("Desoler il n'y a actuellement plus aucun velo a la station");
+			}
 					
 		}
 		catch (SQLException e) 
@@ -179,13 +187,22 @@ public class Location
 			System.out.println("Votre choix : ");
 			String adresseStation = scanner.nextLine();
 			
-			afficherLesBornettesDisponiblesALaStation(requete,adresseStation);
-			System.out.print("Quelle bornette ? : ");
-			String idBornette = scanner.nextLine();
-			
-			idVelo = getIdVelo(requete,idBornette);
-			System.out.println("lid velo est : "+idVelo);
-			insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
+			boolean ilYaDesVelos = afficherLesBornettesDisponiblesALaStation(requete,adresseStation);
+			System.out.println("il y a des velo :" + ilYaDesVelos);
+			if (ilYaDesVelos) 
+			{
+				System.out.print("Quelle bornette ? : ");
+				String idBornette = scanner.nextLine();
+				
+				idVelo = getIdVelo(requete,idBornette);
+				System.out.println("lid velo est : "+idVelo);
+				insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
+				
+			}
+			else
+			{
+				System.out.println("Desoler il n'y a actuellement plus aucun velo a la station");
+			}
 			
 		}
 		catch (SQLException e) 
@@ -243,7 +260,7 @@ public class Location
 		return idVelo;
 	}
 
-	private void afficherLesBornettesDisponiblesALaStation(Statement requete,String adresseStation) throws SQLException 
+	private boolean afficherLesBornettesDisponiblesALaStation(Statement requete,String adresseStation) throws SQLException 
 	{
 		String requeteOracle;
 		ResultSet resultat;
@@ -252,13 +269,15 @@ public class Location
 		
 //		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
-		String idBornette;
+		String idBornette = null;
 		System.out.println("Les bornettes qui contient des velos pour la station '"+adresseStation + "' sont : ");
 		while(resultat.next())
 		{ // récupération des résultats
 			idBornette = resultat.getString("idBornette");
 			System.out.println(idBornette);
 		}
+		System.out.println("valeur de idbornette :" +idBornette);
+		return (idBornette != null);
 	}
 
 	private void insererUneLocation(Statement requete,String idTarif, String idClient
