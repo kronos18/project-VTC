@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 import abonnement.Abonne;
+import abonnement.Bornette;
 import abonnement.Reservation;
+import abonnement.Station;
 import abonnement.Vehicule;
 
 public class MenuPrincipalSuperviseur implements Menu {
@@ -30,9 +32,12 @@ public class MenuPrincipalSuperviseur implements Menu {
 		System.out.println("Que desirez-vous ? ");
 		System.out.println("---------------------------------------------");
 		System.out.println("1 : Consulter les routines d un vehicule !");
-		//System.out.println("2 : Effectuer une reservation !");
-		//System.out.println("3 : Effectuer une location !!");
-		System.out.println("4 : Retourner au menu principal !");
+		System.out.println("2 : Consulter l ordre actuel dans la routine d un vehicule !");
+		System.out.println("3 : Consulter le nombre de velo dans chaque station !");
+		System.out.println("4 : Consulter les plages horaires Vmoins et Vplus d une station !");
+		System.out.println("5 : Modifier la classification d une plage horaire d une station !");
+		System.out.println("6 : Consulter les actions prevues sur une station !");
+		System.out.println("7 : Retourner au menu principal !");
 		System.out.println("---------------------------------------------");
 		System.out.print("Votre choix : ");
 
@@ -56,15 +61,43 @@ public class MenuPrincipalSuperviseur implements Menu {
 		Scanner scan = new Scanner(System.in);
 		choix = scan.nextInt();
 		Connection base = menuPrincipal.getBase();
+		Vehicule vehicule;
+		Bornette bornette;
+		Station station;
 		
 		switch (choix) 
 		{
 		case 1:
-			Vehicule vehicule = new Vehicule(base);
+			vehicule = new Vehicule(base);
 			vehicule.AfficherRoutines();
 			break;
 
+		case 2:
+			vehicule = new Vehicule(base);
+			vehicule.AfficherOrdreActuelDansRoutineDunVehicule();
+			break;
+
+		case 3:
+			bornette = new Bornette(base);
+			bornette.AfficherNbVeloDansStation();
+			break;
+
 		case 4:
+			station = new Station(base);
+			station.AfficherPlagesHorairesVmoinsVplus();
+			break;
+
+		case 5:
+			station = new Station(base);
+			station.ModifierClassificationPlageHoraireStation();
+			break;
+
+		case 6:
+			station = new Station(base);
+			station.AfficherVehiculeEtOrdrePrevusPourUneStation();
+			break;
+			
+		case 7:
 			this.aQuitte = true;
 			System.out.println("Merci d'avoir utiliser l'application !");
 			System.out.println("A très bientot !");
