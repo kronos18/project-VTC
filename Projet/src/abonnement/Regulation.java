@@ -42,7 +42,7 @@ public class Regulation {
 				afficherOrdreRegulation(idRoutine);
 			}
 			if (!resultFound)
-				System.out.println("Aucune routine � effectuer");
+				System.out.println("Aucune routine a effectuer");
 		}
 		catch (SQLException e)
 		{
@@ -77,7 +77,7 @@ public class Regulation {
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Impossible d afficher les ordres des routines");
+			System.out.println("Impossible d'afficher les ordres des routines");
 			System.out.println("Details : "+e.getMessage());
 			System.out.println("La requete etait : "+requeteOracle);
 		}
@@ -155,8 +155,8 @@ public class Regulation {
 				modeleVehicule = resultat.getString("modeleVehicule");
 				placeDisponible = resultat.getString("placeDisponible");
 				System.out.println("id : "+idVehicule);
-				System.out.println("	modele : "+modeleVehicule);
-				System.out.println("	place dispo : "+placeDisponible);
+				System.out.println("  modele : "+modeleVehicule);
+				System.out.println("  place dispo : "+placeDisponible);
 			}
 		
 		} catch (SQLException e) {
