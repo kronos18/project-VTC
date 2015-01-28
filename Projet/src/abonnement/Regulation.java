@@ -93,7 +93,7 @@ public class Regulation {
 		
 		int idVehicule = choixVoitureDispo();
 		
-		System.out.print("Nous vous reservons le vehicule et la routine pour aujourd'hui");
+		System.out.println("Nous vous reservons le vehicule et la routine pour aujourd'hui");
 		
 		String requeteOracle = "insert into regulation values(" + idRoutine + "," + idVehicule + ", sysdate)";
 		
@@ -101,20 +101,26 @@ public class Regulation {
 		try {
 			requete = base.createStatement();
 			ResultSet resultat = requete.executeQuery(requeteOracle);
+			System.out.println("Vehicule reserve.");
+			insererConduite(idVehicule);
 		} catch (SQLException e) {
 			System.out.println("Impossible de demarrer la routine : creation de la regulation echec");
 			System.out.println("Details : "+e.getMessage());
 			System.out.println("La requete etait : "+requeteOracle);
 		}
 		
-		
+
+	}
+	
+	public void insererConduite(int idVehicule)
+	{
 		System.out.print("Rentrez votre identifiant employe :");
 		int idEmp = 0;
 		Scanner scan2 = new Scanner(System.in);
 		idEmp = scan2.nextInt();
 		
-		requeteOracle = "insert into Conduit values(" + idVehicule + "," + idEmp + ", sysdate)";
-
+		String requeteOracle = "insert into Conduit values(" + idVehicule + "," + idEmp + ", sysdate)";
+		Statement requete;
 		try {
 			requete = base.createStatement();
 			ResultSet resultat = requete.executeQuery(requeteOracle);
@@ -123,7 +129,6 @@ public class Regulation {
 			System.out.println("Details : "+e.getMessage());
 			System.out.println("La requete etait : "+requeteOracle);
 		}
-
 	}
 	
 	public int choixVoitureDispo()
