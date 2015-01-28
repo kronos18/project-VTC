@@ -3,6 +3,7 @@ package Menu;
 import java.sql.Connection;
 import java.util.Scanner;
 
+import ressources.Bornette;
 import abonnement.Abonne;
 import abonnement.DepotVelo;
 import abonnement.Location;
@@ -84,6 +85,7 @@ public class MenuPrincipalUtilisateur implements Menu
 		case 5:
 			Bornette bornette;
 			bornette = new Bornette(base);
+			bornette.lancerAffichageDesBornesVplusEtVmoins();
 			break;
 		case 6:
 			this.aQuitte = true;
