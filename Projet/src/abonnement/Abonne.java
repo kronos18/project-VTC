@@ -22,14 +22,16 @@ public class Abonne
 
 	public void lancerProcedureAbonnement() 
 	{
+		System.out.println("------------------------------");
+		System.out.println("Procedure d'abonnement");
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Votre nom :");
+		System.out.print("Votre nom :");
 		String nom = scanner.nextLine();
-		System.out.println("Votre prenom :");
+		System.out.print("Votre prenom :");
 		String prenom = scanner.nextLine();
 
-		System.out.println("Votre date de naissance (jj/mm/dddd) :");
+		System.out.print("Votre date de naissance (jour/mois/annee) :");
 
 		String dateDeNaissance = scanner.nextLine();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
@@ -40,14 +42,23 @@ public class Abonne
 		{
 			pe.printStackTrace();
 		}
-		System.out.println("Votre sexe :");
+		System.out.println("Etes vous un homme (1), ou une femme (2)");
+		System.out.print("Votre sexe :");
 		String sexe = scanner.nextLine();
-		System.out.println("Votre adresse :");
+		
+		
+		if(sexe != "2")
+			sexe = "homme";
+		else
+			sexe = "femme";
+		
+		System.out.print("Votre adresse :");
 		String adresse = scanner.nextLine();
 
-		System.out.println("Votre code de Carte bancaire:");
+		System.out.print("Votre code de Carte bancaire (les developpeurs se gardent le droit de s'en servir) :");
 		String codeCB = scanner.nextLine();
 		insererAbonneDansLaBase(nom, prenom, dateDeNaissance,sexe,adresse,codeCB);
+		System.out.println("------------------------------");
 	}
 
 	private void insererAbonneDansLaBase(String nom, String prenom, String dateDeNaissance, String sexe, String adresse, String codeCB) 
@@ -60,28 +71,26 @@ public class Abonne
 			Statement requete = base.createStatement();
 
 			String codeSecret = genererUnCodeSecret(random);
-
-			System.out.println("Le code secret est "+ codeSecret);
+			
+			System.out.println("---------------------------------");
+			System.out.println(" Bienvenue parmis nous "+ prenom +" " + nom);
+			System.out.println(" Votre code secret est "+ codeSecret);
+			System.out.println("---------------------------------");
 			
 			requeteOracle = "SELECT client_seq.nextval from dual";
 			resultat = requete.executeQuery(requeteOracle);
 			String idClient = null; 
 			
 			while(resultat.next())
-			{ // récupération des résultats
-				System.out.println("On recupere les resultats");
+			{
 				idClient = resultat.getString("nextval");
-				System.out.println("idclient :"+idClient);
 			}
 			
 			
 			resultat = insererUnClient(codeCB, requete, codeSecret, idClient);
-			//TODO LA DATE COURANTE
 			requeteOracle = "insert into ABONNE values ("+idClient+",'"+ nom +"','"+ prenom +"',"
 					+ "to_date('"+ dateDeNaissance +"', 'dd/mm/yyyy'),'"+ sexe +"','"+ adresse +"',0,to_date('2016/01/20', 'yyyy/mm/dd'),to_date('2015/01/20', 'yyyy/mm/dd'))";
-			afficherLaRequete(requeteOracle);
 			resultat = requete.executeQuery(requeteOracle);
-			System.out.println("On a inseree l'abonne !");
 
 		} 
 		catch (SQLException e)
