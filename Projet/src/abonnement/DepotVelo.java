@@ -51,6 +51,11 @@ public class DepotVelo
 				//			idVelo = getIdVelo(requete, idBornette);
 
 				mettreAjourLaLocation(requete,adresseStation,idLocation);
+				if (clientAauMoinsUneAmende(requete))
+				{
+					System.out.println("Vous avez rendu le velo en retard !");
+					System.out.println("Une amende vient d'etre emise a votre encontre !");
+				}
 			}
 			else
 			{
@@ -68,6 +73,23 @@ public class DepotVelo
 
 
 	}
+
+	private boolean clientAauMoinsUneAmende(Statement requete) throws SQLException {
+		String requeteOracle;
+		String idAmende = null ;
+		ResultSet resultat;
+
+		requeteOracle = "SELECT idAmende FROM Amende WHERE idClient = 4 and TO_CHAR(datePenalite,'dd/mm/yyyy') = TO_CHAR(sysdate,'dd/mm/yyyy')";
+
+		//		System.out.println("La requete est : "+requeteOracle);
+		resultat = requete.executeQuery(requeteOracle);
+		while(resultat.next())
+		{ // récupération des résultats
+			idAmende = resultat.getString("idAmende");
+		}
+		return idAmende != null;
+	}
+
 
 	private String getIdLocation(Statement requete, String idClient) throws SQLException {
 		String requeteOracle;
@@ -122,23 +144,24 @@ public class DepotVelo
 
 	public static boolean afficherLesBornettesVide(Statement requete,String adresseStation ) throws SQLException {
 		String requeteOracle;
+		String idBornette = null;
 		boolean isNotNull;
-		requeteOracle = "SELECT idBornette FROM bornette WHERE adresseStation = '"+adresseStation+"' and idVelo is NULL";
+		requeteOracle = "SELECT idBornette FROM bornette WHERE adresseStation = '"+adresseStation+"' and idVelo is NULL and etatBornette = 'OK' ";
 
-				System.out.println("La requete est : "+requeteOracle);
+//				System.out.println("La requete est : "+requeteOracle);
 		ResultSet resultat = requete.executeQuery(requeteOracle);
 		System.out.println("-------------------------------------\n");
 
 		System.out.println("Les bornettes disponibles sont : ");
-		System.out.println("====================\n");
+		System.out.println("==================================\n");
 
 		while(isNotNull = resultat.next())
 		{ // récupération des résultats
-			adresseStation = resultat.getString("idBornette");
-			System.out.println(adresseStation);
+			idBornette = resultat.getString("idBornette");
+			System.out.println(idBornette);
 		}
 		System.out.println("\n-------------------------------------\n");
-		System.out.println("adresseStation : " + adresseStation);
+		System.out.println("idbornette : " + idBornette);
 		return adresseStation != null;
 	}
 

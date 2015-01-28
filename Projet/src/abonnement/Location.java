@@ -268,6 +268,7 @@ public class Location
 		resultat = requete.executeQuery(requeteOracle);
 		String idBornette = null;
 		System.out.println("Les bornettes qui contient des velos pour la station '"+adresseStation + "' sont : ");
+		
 		while(resultat.next())
 		{ // récupération des résultats
 			idBornette = resultat.getString("idBornette");
