@@ -65,7 +65,7 @@ public class Location
 			Scanner scanner = new Scanner(System.in);
 			String codeSecret;
 			
-			System.out.println("Veuillez entrer votre code de carte bleu svp ! : ");
+			System.out.print("Veuillez entrer votre code de carte bleu svp ! : ");
 			String codeCB = scanner.nextLine();
 			
 			System.out.println("Merci !");
@@ -78,14 +78,13 @@ public class Location
 			insererUnClient(codeCB, requete, codeSecret);
 			
 			
-			System.out.println("Quelle station ?");
+			System.out.println("Quelle station ?\n");
 			afficherLesStations(requete);
 			
-			System.out.println("Votre choix : ");
+			System.out.print("\nVotre choix : ");
 			String adresseStation = scanner.nextLine();
 			
 			boolean ilYaDesVelos = afficherLesBornettesDisponiblesALaStation(requete,adresseStation);
-			System.out.println("il y a des velo :" + ilYaDesVelos);
 			if (ilYaDesVelos) 
 			{
 				System.out.print("Quelle bornette ? : ");
@@ -93,7 +92,6 @@ public class Location
 	
 				idVelo = getIdVelo(requete,idBornette);
 				idClient = getIdClient(requete,codeSecret);
-				System.out.println("lid velo est : "+idVelo);
 				insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
 			}
 			else
@@ -122,9 +120,9 @@ public class Location
 		
 		while(resultat.next())
 		{ // récupération des résultats
-			System.out.println("On recupere l'id de l'abonne");
+//			System.out.println("On recupere l'id de l'abonne");
 			idClient = resultat.getString("idClient");
-			System.out.println("idclient :"+idClient);
+//			System.out.println("idclient :"+idClient);
 		}
 		return idClient;
 	}
@@ -150,7 +148,7 @@ public class Location
 		requeteOracle = "insert into CLIENT values (Client_seq.nextval,"+ codeSecret +","+codeCB +")";
 
 		resultat = requete.executeQuery(requeteOracle);
-		System.out.println("On a inserer un client");
+//		System.out.println("On a inserer un client");
 		return resultat;
 	}
 	
@@ -168,13 +166,13 @@ public class Location
 			Statement requete = base.createStatement();
 			Scanner scanner = new Scanner(System.in);
 			
-			System.out.println("Votre nom :");
+			System.out.print("Votre nom : ");
 			String nom = scanner.nextLine();
 			
-			System.out.println("Votre prenom :");
+			System.out.print("Votre prenom : ");
 			String prenom = scanner.nextLine();
 			
-			System.out.println("Votre code secret:");
+			System.out.print("Votre code secret: ");
 			String codeSecret = scanner.nextLine();
 			idTarif = "2";
 			idClient = getIdAbonne(requete,nom,prenom,codeSecret);
@@ -188,14 +186,13 @@ public class Location
 			String adresseStation = scanner.nextLine();
 			
 			boolean ilYaDesVelos = afficherLesBornettesDisponiblesALaStation(requete,adresseStation);
-			System.out.println("il y a des velo :" + ilYaDesVelos);
+			//System.out.println("il y a des velo :" + ilYaDesVelos);
 			if (ilYaDesVelos) 
 			{
 				System.out.print("Quelle bornette ? : ");
 				String idBornette = scanner.nextLine();
 				
 				idVelo = getIdVelo(requete,idBornette);
-				System.out.println("lid velo est : "+idVelo);
 				insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
 				
 			}
@@ -255,7 +252,7 @@ public class Location
 		while(resultat.next())
 		{ // récupération des résultats
 			idVelo = resultat.getString("idVelo");
-			System.out.println(idVelo);
+//			System.out.println(idVelo);
 		}
 		return idVelo;
 	}
@@ -265,7 +262,7 @@ public class Location
 		String requeteOracle;
 		ResultSet resultat;
 		
-		requeteOracle = "SELECT idBornette,idVelo FROM Bornette WHERE adresseStation = '"+adresseStation+"' AND idVelo is NOT null";
+		requeteOracle = "SELECT BORNETTE.idBornette,BORNETTE.idVelo FROM Bornette INNER JOIN Velo ON (Bornette.idVelo = VELO.idVelo) WHERE BORNETTE.adresseStation = '"+ adresseStation +"' AND Velo.etatVelo = 'OK' AND BORNETTE.idVelo is NOT null";
 		
 //		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
@@ -276,7 +273,7 @@ public class Location
 			idBornette = resultat.getString("idBornette");
 			System.out.println(idBornette);
 		}
-		System.out.println("valeur de idbornette :" +idBornette);
+//		System.out.println("valeur de idbornette :" +idBornette);
 		return (idBornette != null);
 	}
 
@@ -308,9 +305,9 @@ public class Location
 		
 		while(resultat.next())
 		{ // récupération des résultats
-			System.out.println("On recupere l'id de l'abonne");
+//			System.out.println("On recupere l'id de l'abonne");
 			idClient = resultat.getString("idClient");
-			System.out.println("idclient :"+idClient);
+//			System.out.println("idclient :"+idClient);
 		}
 		return idClient;
 	}
