@@ -191,8 +191,9 @@ public class Location
 			{
 				System.out.print("Quelle bornette ? : ");
 				String idBornette = scanner.nextLine();
-				
+				System.out.println("La bornette est "+ idBornette);
 				idVelo = getIdVelo(requete,idBornette);
+				System.out.println("Le velo est : " + idVelo);
 				insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
 				
 			}

@@ -15,7 +15,8 @@ public class Action {
 		this.base = base;
 	}
 
-	public void SaisirAction() {
+	public void SaisirAction() 
+	{
 		ResultSet resultat;
 		String requeteOracle = "insert into action values(action_seq.nextval,";
 		
@@ -77,7 +78,7 @@ public class Action {
 		{
 			System.out.println("Impossible d afficher les ordres des routines");
 			System.out.println("Details : "+e.getMessage());
-			System.out.println("La requête était : "+requeteOracle);
+			System.out.println("La requï¿½te ï¿½tait : "+requeteOracle);
 		}
 		
 	}
