@@ -66,7 +66,10 @@ public class OrdreRegulation {
 		{
 			Statement requete = base.createStatement();
 			resultat = requete.executeQuery(requeteOracle);
-			idOrdreRegulation = resultat.getInt("idOrdreRegulation");
+			while(resultat.next())
+			{
+				idOrdreRegulation = resultat.getInt("idOrdreRegulation");
+			}
 		}
 		catch (SQLException e)
 		{
@@ -75,7 +78,6 @@ public class OrdreRegulation {
 			System.out.println("La requête était : "+requeteOracle);
 		}
 		
-		// cas echec
 		if(idOrdreRegulation == 0)
 			return;
 		
@@ -103,6 +105,9 @@ public class OrdreRegulation {
 			System.out.println("Details : "+e.getMessage());
 			System.out.println("La requête était : "+requeteOracle);
 		}
-		
+		if(choix == 1)
+			System.out.println("L'ordre que vous etiez en train de faire a ete annule");
+		else
+			System.out.println("L'ordre que vous etiez en train de faire a ete valide");
 	}
 }

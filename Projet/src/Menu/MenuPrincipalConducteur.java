@@ -69,7 +69,6 @@ public class MenuPrincipalConducteur implements Menu {
 			regulation.DemarrerRoutines();
 			break;
 		case 3:
-
 			or.ValiderOrdre();
 			break;
 		case 4:

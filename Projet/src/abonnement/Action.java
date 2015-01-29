@@ -72,6 +72,7 @@ public class Action {
 		{
 			Statement requete = base.createStatement();
 			resultat = requete.executeQuery(requeteOracle);
+			System.out.print("L'action saisis a ete correctement enregistre");
 		}
 		catch (SQLException e)
 		{
@@ -79,6 +80,5 @@ public class Action {
 			System.out.println("Details : "+e.getMessage());
 			System.out.println("La requête était : "+requeteOracle);
 		}
-		
 	}
 }

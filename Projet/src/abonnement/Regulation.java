@@ -108,8 +108,7 @@ public class Regulation {
 			System.out.println("Details : "+e.getMessage());
 			System.out.println("La requete etait : "+requeteOracle);
 		}
-		
-
+		System.out.println("Il est temps d'aller travailler maitenant, votre travail est programmé");
 	}
 	
 	public void insererConduite(int idVehicule)
