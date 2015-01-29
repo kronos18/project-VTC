@@ -51,10 +51,14 @@ public class DepotVelo
 				{
 					System.out.print("Votre choix : ");
 					idBornette = scanner.nextLine();
+					
 					idClient = Location.getIdClient(requete, codeSecret);
 					idLocation = getIdLocation(requete, idClient);
 					
 					mettreAjourLaLocation(requete,adresseStation,idLocation);
+					
+					System.out.println("Nous avons bien pris en compte le depot de votre velo ! ");
+					System.out.println("Merci !\n\n");
 					
 					if (clientAauMoinsUneAmende(requete,idClient))
 					{
