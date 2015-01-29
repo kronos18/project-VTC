@@ -35,7 +35,7 @@ public class MenuPrincipalSuperviseur implements Menu {
 		System.out.println("3 : Consulter le nombre de velo dans chaque station !");
 		System.out.println("4 : Consulter les plages horaires Vmoins et Vplus d une station !");
 		System.out.println("5 : Modifier la classification d une plage horaire d une station !");
-		System.out.println("6 : Consulter les actions prevues sur une station !");
+		System.out.println("6 : Consulter les ordres de regulations prevues sur une station !");
 		System.out.println("7 : Retourner au menu principal !");
 		System.out.println("---------------------------------------------");
 		System.out.print("Votre choix : ");
