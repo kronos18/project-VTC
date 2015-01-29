@@ -107,4 +107,138 @@ public class Vehicule
 			System.out.println("Details : "+e.getMessage());
 		}
 	}
+
+	public void ModifierRoutine() 
+	{
+		//Recuperation des informations via le menu
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Numero de la routine :");
+		String idRoutine = scanner.nextLine();
+		String ordreExecution = "";
+		String nomOrdreRegulation = "";
+
+
+		//Interrogation de la base de donnee
+		try
+		{
+			String requeteOracle;
+			Statement requete = base.createStatement();
+			ResultSet resultat;
+
+			//Affiche les ordres de la routine	
+			requeteOracle = "select e.ordreExecution, o.nomOrdreRegulation from execution e, OrdreRegulation o where e.idOrdreRegulation = o.idOrdreRegulation and e.idroutines = " + idRoutine + " order by e.ordreExecution";
+			resultat = requete.executeQuery(requeteOracle);
+
+			System.out.println("Ordres de la routine " + idRoutine + " : ");
+			while(resultat.next())
+			{ 
+				ordreExecution = resultat.getString("ordreExecution");
+				nomOrdreRegulation = resultat.getString("nomOrdreRegulation");
+				System.out.println("\t" + ordreExecution + " : " + nomOrdreRegulation);
+			}
+
+			System.out.println("");
+			System.out.println("Que voulez-vous faire :");
+			System.out.println("1 : Changer la priorite d un ordre");
+			System.out.println("2 : Ajouter un ordre");
+			System.out.println("3 : Supprimer un ordre");
+			String choix = scanner.nextLine();
+
+			switch (choix) 
+			{
+			case "1" :
+				this.ModifierPrioDunOrdre(idRoutine, requete);
+				break;
+
+			case "2":
+				this.AjouterUnOrdreALaRoutine(idRoutine, requete);
+				break;
+				
+			case "3":
+				this.SupprimerUnOrdreDeLaRoutine(idRoutine, requete);
+				break;
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Impossible d afficher la routine du vehicule.");
+			System.out.println("Details : "+e.getMessage());
+		}
+	}
+
+	private void SupprimerUnOrdreDeLaRoutine(String idRoutine, Statement requete) 
+	{
+		//Recuperation des informations via le menu
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Identifiant de l ordre de regulation : ");
+		String idOrdreRegul = scanner.nextLine();
+
+		try
+		{
+			//Ajoute un ordre a la priorite
+			String requeteOracle = "delete from execution where idOrdreExecution = " + idOrdreRegul + " and idroutines = " + idRoutine;
+			ResultSet resultat = requete.executeQuery(requeteOracle);
+			
+			System.out.println("Ordre supprime de la routine.");
+		} 
+		catch (SQLException e) 
+		{
+			System.out.println("Impossible de supprimer un ordre de la routine.");
+			System.out.println("Details : "+e.getMessage());
+		}
+	}
+
+	private void AjouterUnOrdreALaRoutine(String idRoutine, Statement requete) 
+	{
+		//Recuperation des informations via le menu
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Identifiant de l ordre de regulation : ");
+		String idOrdreRegul = scanner.nextLine();
+
+		System.out.println("Priorite de l ordre de regulation : ");
+		String PrioOrdre = scanner.nextLine();
+
+		try
+		{
+			//Ajoute un ordre a la priorite
+			String requeteOracle = "INSERT INTO execution values (" + idOrdreRegul + "," + idRoutine + "," + PrioOrdre + ",'attente')";
+			ResultSet resultat = requete.executeQuery(requeteOracle);
+			
+			System.out.println("Ordre ajoute a la routine.");
+		} 
+		catch (SQLException e) 
+		{
+			System.out.println("Impossible d ajouter un ordre a la routine.");
+			System.out.println("Details : "+e.getMessage());
+		}
+	}
+
+	private void ModifierPrioDunOrdre(String idRoutine, Statement requete) 
+	{
+		//Recuperation des informations via le menu
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Priorite actuelle de l ordre a changer : ");
+		String oldPrio = scanner.nextLine();
+
+		System.out.println("Nouvelle priorite de l ordre : ");
+		String NewPrio = scanner.nextLine();
+
+		try
+		{
+			//Modifie un ordre de priorite  NE MARCHE PAS
+			String requeteOracle = "update execution set ordreExecution = " + NewPrio + " where ordreExecution = " + oldPrio + " and idroutines = " + idRoutine;
+			ResultSet resultat = requete.executeQuery(requeteOracle);
+			
+			System.out.println("Mise a jour effectuee.");
+		} 
+		catch (SQLException e) 
+		{
+			System.out.println("Impossible de modifier la routine.");
+			System.out.println("Details : "+e.getMessage());
+		}
+	}
 }

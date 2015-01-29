@@ -1,6 +1,7 @@
 package abonnement;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -112,15 +113,26 @@ public class Station
 			//Récupère les véhicules
 			requeteOracle = "select idVehicule from regulation where idroutines in (select idroutines from execution where status = 'attente' and idOrdreRegulation in (select idOrdreRegulation from OrdreRegulation where adressestation = '" + adresseStation + "')) group by idvehicule";			
 			resultat = requete.executeQuery(requeteOracle);
-			
-			System.out.println("Vehicule\tNombre de place disponibles\tPriorite\tNom de l ordre");
-			System.out.println("------------------------------------------------------------------------------------");
+
+			System.out.println("Ordre prevus pour la station " + adresseStation + " : ");
+			System.out.println("Vehicule\tNb place dispo\tRoutine\tDate\t\t\t\tPriorite\tNom de l ordre");
+			System.out.println("-------------------------------------------------------------------------------------------------------------------");
 			
 			//Pour chaque vehicule, affiche le vehicule, les places dispo, le nom de l'ordre a effectuer et son ordre de priorité
 			String idVehicule = "";
 			String NbPlaceDispo = "";
 			String NomOrdre = "";
 			String PrioOrdre = "";
+			String idRoutine = "";
+			String dateExec = "";
+			
+			Date dateDerniereVisite = null;
+			Date currdateDerniereVisite = null;
+			String idVehiculeDerniereVisite = "";
+			String NomOrdreDerniereVisite = "";
+			String PrioOrdreDerniereVisite = "";
+			String idRoutineDerniereVisite = "";
+			String dateExecDerniereVisite = "";
 			while (resultat.next())
 			{
 				idVehicule = resultat.getString("idVehicule");
@@ -132,18 +144,46 @@ public class Station
 					NbPlaceDispo = sousResultat.getString("placeDisponible");
 				
 				//Récupère le nom de l'ordre ainsi que sa priorité
-				requeteOracle = "select o.nomOrdreRegulation, e.ordreExecution from OrdreRegulation o, Execution e where o.adresseStation = 'Meylan' and e.status = 'attente' and o.idOrdreRegulation = e.idOrdreRegulation and e.idroutines in ( select idroutines from regulation where idVehicule = 2 )";
+				requeteOracle = "select o.nomOrdreRegulation, e.ordreExecution, r.idroutines, to_char(r.dateExecution, 'DAY dd MONTH yyyy') as dateExec	from OrdreRegulation o, Execution e, Regulation r where o.adresseStation = '" + adresseStation + "' and e.status = 'attente' and o.idOrdreRegulation = e.idOrdreRegulation and r.idroutines = e.idroutines and r.idVehicule = " + idVehicule + " and r.dateExecution >= sysdate order by r.dateExecution, e.ordreExecution";
 				sousResultat = requete.executeQuery(requeteOracle);
 				while (sousResultat.next())
 				{
 					NomOrdre = sousResultat.getString("nomOrdreRegulation");
 					PrioOrdre = sousResultat.getString("ordreExecution");
+					idRoutine = sousResultat.getString("idroutines");
+					dateExec = sousResultat.getString("dateExec");
+					System.out.println(idVehicule + "\t\t" + NbPlaceDispo + "\t\t" + idRoutine + "\t" + dateExec + "\t" + PrioOrdre + "\t\t" + NomOrdre);
 				}
 				sousResultat.close();
 				
-				System.out.println(idVehicule + "\t\t" + NbPlaceDispo + "\t\t\t\t" + PrioOrdre + "\t\t" + NomOrdre);
+				//Vérifie la derniere visite
+				requeteOracle = "select o.nomOrdreRegulation, e.ordreExecution, r.idroutines, r.dateExecution, to_char(r.dateExecution, 'DAY dd MONTH yyyy') as dateExec from OrdreRegulation o, Execution e, Regulation r where o.adresseStation = '" + adresseStation + "' and e.status = 'effectuee' and o.idOrdreRegulation = e.idOrdreRegulation and r.idroutines = e.idroutines and r.idVehicule = " + idVehicule + " and r.dateExecution < sysdate";
+				sousResultat = requete.executeQuery(requeteOracle);
+				while (sousResultat.next())
+				{
+					//Initialise les dates de dernieres visites
+					if (dateDerniereVisite == null)
+						dateDerniereVisite = sousResultat.getDate("dateExecution");
+					currdateDerniereVisite = sousResultat.getDate("dateExecution");
+					
+					//Si la date de visite de ce resultat est plus tard que la date de derniere visite rencontree jusqu a maintenant, prend cette valeur.
+					if (dateDerniereVisite.before(currdateDerniereVisite))
+					{
+						dateDerniereVisite = currdateDerniereVisite;
+						idVehiculeDerniereVisite = idVehicule;
+						NomOrdreDerniereVisite = sousResultat.getString("nomOrdreRegulation");
+						PrioOrdreDerniereVisite = sousResultat.getString("ordreExecution");
+						idRoutineDerniereVisite = sousResultat.getString("idroutines");
+						dateExecDerniereVisite = sousResultat.getString("dateExec");
+					}
+				}
+				sousResultat.close();
+				
+				
 			}
 			resultat.close();
+
+			System.out.println("Derniere visite de la station " + adresseStation + " le " + dateExecDerniereVisite + " par le vehicule " + idVehiculeDerniereVisite + ", pour la routine " + idRoutineDerniereVisite + " et pour l ordre " + PrioOrdreDerniereVisite + " : " + NomOrdreDerniereVisite);
 		}
 		catch (SQLException e)
 		{

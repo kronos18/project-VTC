@@ -35,8 +35,9 @@ public class MenuPrincipalSuperviseur implements Menu {
 		System.out.println("3 : Consulter le nombre de velo dans chaque station !");
 		System.out.println("4 : Consulter les plages horaires Vmoins et Vplus d une station !");
 		System.out.println("5 : Modifier la classification d une plage horaire d une station !");
-		System.out.println("6 : Consulter les actions prevues sur une station !");
-		System.out.println("7 : Retourner au menu principal !");
+		System.out.println("6 : Consulter les ordres de regulations prevues sur une station !");
+		System.out.println("7 : Modifier la routine d un vehicule !");
+		System.out.println("8 : Retourner au menu principal !");
 		System.out.println("---------------------------------------------");
 		System.out.print("Votre choix : ");
 
@@ -94,8 +95,13 @@ public class MenuPrincipalSuperviseur implements Menu {
 			station = new Station(base);
 			station.AfficherVehiculeEtOrdrePrevusPourUneStation();
 			break;
-			
+
 		case 7:
+			vehicule = new Vehicule(base);
+			vehicule.ModifierRoutine();
+			break;
+			
+		case 8:
 			this.aQuitte = true;
 			System.out.println("Merci d'avoir utiliser l'application !");
 			System.out.println("A très bientot !");

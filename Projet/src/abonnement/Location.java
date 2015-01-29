@@ -191,8 +191,9 @@ public class Location
 			{
 				System.out.print("Quelle bornette ? : ");
 				String idBornette = scanner.nextLine();
-				
+//				System.out.println("La bornette est "+ idBornette);
 				idVelo = getIdVelo(requete,idBornette);
+//				System.out.println("Le velo est : " + idVelo);
 				insererUneLocation(requete,idTarif,idClient,idVelo, adresseStation);
 				
 			}
@@ -267,13 +268,14 @@ public class Location
 //		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
 		String idBornette = null;
-		System.out.println("Les bornettes qui contient des velos pour la station '"+adresseStation + "' sont : ");
+		System.out.println("Les bornettes qui contiennent des velos pour la station '"+adresseStation + "' sont :\n ");
 		
 		while(resultat.next())
 		{ // récupération des résultats
 			idBornette = resultat.getString("idBornette");
 			System.out.println(idBornette);
 		}
+		System.out.println("\n");
 //		System.out.println("valeur de idbornette :" +idBornette);
 		return (idBornette != null);
 	}
@@ -289,7 +291,7 @@ public class Location
 		
 //		System.out.println("La requete est : "+requeteOracle);
 		resultat = requete.executeQuery(requeteOracle);
-		System.out.println("Votre location a bien ete pris en compte !");
+		System.out.println("Votre location a bien ete pris en compte !\n\n");
 	}
 
 	private String getIdAbonne(Statement requete, String nomAbonne, String prenomAbonne, String codeSecret) throws SQLException 
