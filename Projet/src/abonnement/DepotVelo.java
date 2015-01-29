@@ -230,7 +230,6 @@ public class DepotVelo
 		while(resultat.next())
 		{ // récupération des résultats
 			idLocation = resultat.getString("idLocation");
-			System.out.println(idLocation);
 		}
 		return idLocation;
 	}
