@@ -1,3 +1,3 @@
 # project-VTC
 
-Projet de base de donnée et de monter en compétence sur les triggers PL/SQL dans le cadre du 1er semestre du Master 1.
+Projet de base de données afin de monter en compétences sur les triggers PL/SQL dans le cadre du 1er semestre du Master 1.
